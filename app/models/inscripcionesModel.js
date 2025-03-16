@@ -1,17 +1,32 @@
 'use strict'
 
 const { DataTypes } = require('sequelize');
+const { FOREIGNKEYS } = require('sequelize/lib/query-types');
 
 module.exports = (Sequelize) => { 
     const attributes = {
-        idCategoria: {
+        idInscripcion: {
             type: DataTypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false,
+            autoIncrement: true
         },
-        nombreCategoria: {
-            type: DataTypes.STRING(45),
-
+        idEstudiante: {
+            type: DataTypes.INTEGER,
+            FOREIGNKEYS: true
         },
+        idCurso: {
+            type: DataTypes.INTEGER,
+            FOREIGNKEYS: true
+        },
+        FechaInscripcion: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        estadoInscripcion:{
+            type: DataTypes.ENUM('AC','IN'),
+            allowNull:false
+        }
     };
     const options = {
         defaultScope: {
