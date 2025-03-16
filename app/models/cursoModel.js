@@ -4,14 +4,33 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (Sequelize) => { 
     const attributes = {
-        idCategoria: {
+        idCurso: {
             type: DataTypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false
         },
-        nombreCategoria: {
-            type: DataTypes.STRING(45),
+        nombreCurso: {
+            type: DataTypes.VARCHAR(100),
+            allowNull: false
+        },
+        descripcion:{
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        creditos:{
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        profesorCurso:{
+            type:DataTypes.VARCHAR(45),
+            allowNull: false
+        },
+        horarioCurso:{
+            type:DataTypes.DATE,
+            allowNull:false
+        }
 
-        },
     };
     const options = {
         defaultScope: {
