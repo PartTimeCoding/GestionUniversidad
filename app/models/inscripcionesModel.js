@@ -1,10 +1,9 @@
 'use strict'
 
 const { DataTypes } = require('sequelize');
-const { FOREIGNKEYS } = require('sequelize/lib/query-types');
 
-module.exports = (Sequelize) => { 
-    const attributes = {
+module.exports = (sequelize) => { 
+    const Inscripcion = sequelize.define('Inscripcion', {
         idInscripcion: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -13,28 +12,40 @@ module.exports = (Sequelize) => {
         },
         idEstudiante: {
             type: DataTypes.INTEGER,
-            FOREIGNKEYS: true
+            allowNull: false,
+            references: {
+                model: 'estudiantes',
+                key: 'idEstudiante'
+            }
         },
         idCurso: {
             type: DataTypes.INTEGER,
-            FOREIGNKEYS: true
+            allowNull: false,
+            references: {
+                model: 'cursos',
+                key: 'idCurso'
+            }
         },
         FechaInscripcion: {
             type: DataTypes.DATE,
             allowNull: false
         },
-        estadoInscripcion:{
-            type: DataTypes.ENUM('AC','IN'),
-            allowNull:false
+        estadoInscripcion: {
+            type: DataTypes.ENUM('Activa', 'Cancelada', 'Completa'),
+            allowNull: false
         }
-    };
-    const options = {
-        defaultScope: {
-            attributes: { excludes: ['createdAt', 'updatedAt']}
-        },
-        scopes: {},
+    }, {
         tableName: 'inscripciones',
-        timestamps: 'false'
+        timestamps: false,
+        defaultScope: {
+            attributes: { exclude: ['createdAt', 'updatedAt'] }
+        },
+    });
+
+    Inscripcion.associate = (models) => {
+        Inscripcion.belongsTo(models.Estudiante, { foreignKey: 'idEstudiante', as: 'estudiante' });
+        Inscripcion.belongsTo(models.Curso, { foreignKey: 'idCurso', as: 'curso' });
     };
-    return Sequelize.afterDefine('inscripciones', attributes, options);
+
+    return Inscripcion;
 };

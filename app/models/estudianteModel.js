@@ -2,8 +2,8 @@
 
 const { DataTypes } = require('sequelize');
 
-module.exports = (Sequelize) => { 
-    const attributes = {
+module.exports = (sequelize) => { 
+    const Estudiante = sequelize.define('Estudiante',{
         idEstudiante: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -11,11 +11,11 @@ module.exports = (Sequelize) => {
             autoIncrement: true
         },
         nombreEstudiante: {
-            type: DataTypes.VARCHAR(50),
+            type: DataTypes.STRING(50),
             allowNull: false,
         },
         apellidoEstudiante: {
-            type: DataTypes.VARCHAR(50),
+            type: DataTypes.STRING(50),
             allowNull: false,
         },
         fecha_nacimiento: {
@@ -27,25 +27,26 @@ module.exports = (Sequelize) => {
             allowNull: false,
         },
         correoElectronico: {
-            type: DataTypes.VARCHAR(100),
+            type: DataTypes.STRING(100),
             allowNull: false,
+            unique: true,
         },
         telefono: {
-            type: DataTypes.VARCHAR(8),
+            type: DataTypes.STRING(8),
             allowNull: false,
         },
         carrera: {
-            type: DataTypes.VARCHAR(100),
+            type: DataTypes.STRING(100),
             allowNull: false,
         },
-    };
-    const options = {
+    }, {
+        tableName: 'estudiante',
+        timestamps: false,
         defaultScope: {
-            attributes: { excludes: ['createdAt', 'updatedAt']}
+            attributes: { exclude: ['createdAt', 'updatedAt'] }
         },
         scopes: {},
-        tableName: 'estudiante',
-        timestamps: 'false'
-    };
-    return Sequelize.afterDefine('estudiante', attributes, options);
+    });
+
+    return Estudiante;
 };
