@@ -18,7 +18,11 @@ module.exports = (sequelize) => {
         password: {
             type: DataTypes.STRING(255),
             allowNull: false
-        }
+        },
+        idEstudiante: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        } 
     }, {
         tableName: 'usuarios',
         timestamps: false,
@@ -28,7 +32,11 @@ module.exports = (sequelize) => {
         scopes: {},
     });
 
-    Usuario.hasOne(sequelize.models.Estudiante, { foreignKey: 'usuarioId', as: 'estudiante' });
+    Usuario.associate = (models) => { Usuario.belongsTo(models.Estudiante, {
+          foreignKey: 'idEstudiante',
+          as: 'estudiante'
+        });
+      };
 
     return Usuario;
 };

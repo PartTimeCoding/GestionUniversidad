@@ -30,9 +30,11 @@ db.estudiantes = require('../models/estudianteModel')(sequelizeInstance, Sequeli
 db.inscripciones = require('../models/inscripcionesModel')(sequelizeInstance, Sequelize);
 db.usuarios = require('../models/usuariosModel')(sequelizeInstance, Sequelize);
 
+db.estudiantes.hasOne(db.usuarios, {foreignKey: 'idEstudiante', as: 'usuario'});
+db.usuarios.belongsTo(db.estudiantes, {foreignKey: 'idEstudiante', as: 'estudiante'});
+
 db.SequelizeInstance.sync()
     .then(() => console.log("Modelos sincronizados con la base de datos"))
     .catch((err) => console.error("Error al sincronizar modelos:", err));
-
 
 module.exports = db;

@@ -48,5 +48,11 @@ module.exports = (sequelize) => {
         scopes: {},
     });
 
+    Estudiante.associate = (models) => { Estudiante.hasOne(models.Usuario, {
+          foreignKey: 'idEstudiante',
+          as: 'usuario'
+        });
+      };
+
     return Estudiante;
 };
