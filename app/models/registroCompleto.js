@@ -3,8 +3,8 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => { 
-    const Estudiante = sequelize.define('Estudiante',{
-        idEstudiante: {
+    const RegistroCompleto = sequelize.define('registro_completo', {
+        idRegistro: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
@@ -18,9 +18,11 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        fecha_nacimiento: {
-            type: DataTypes.DATE,
-            allowNull: false,
+        usuario: {
+            type: DataTypes.STRING,
+        },
+        password: {
+            type: DataTypes.STRING,
         },
         direccion: {
             type: DataTypes.TEXT,
@@ -39,14 +41,29 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        idCurso: {
+            type: DataTypes.INTEGER,
+        },
+        fechaInscripcion: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        estadoInscripcion: {
+            type: DataTypes.ENUM('pendiente', 'confirmada'),
+            allowNull: false
+        }
     }, {
-        tableName: 'estudiante',
+        tableName: 'inscripciones',
         timestamps: false,
         defaultScope: {
             attributes: { exclude: ['createdAt', 'updatedAt'] }
         },
-        scopes: {},
     });
 
-    return Estudiante;
+    Inscripcion.associate = (models) => {
+        Inscripcion.belongsTo(models.Estudiante, { foreignKey: 'idEstudiante', as: 'estudiante' });
+        Inscripcion.belongsTo(models.Curso, { foreignKey: 'idCurso', as: 'curso' });
+    };
+
+    return RegistroCompleto;
 };

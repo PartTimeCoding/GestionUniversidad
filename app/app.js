@@ -12,7 +12,8 @@ App.use(cors());
 
 const cursoRoutes = require('./routes/cursoRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
-const inscripcionesRoutes = require('./routes/inscripcionesRoutes');
+const estudianteRoutes = require('./routes/estudianteRoutes');
+const inscripcionRoutes = require('./routes/inscripcionRoutes');
 const authRoutes = require('./routes/authRoutes');
 
 db.SequelizeInstance.sync()
@@ -21,7 +22,8 @@ db.SequelizeInstance.sync()
 
 App.use('/api/auth', authRoutes);
 App.use('/api/cursos', authMiddleware.isAuth, cursoRoutes);
+App.use('/api/estudiante', estudianteRoutes);
 App.use('/api/usuarios', usuarioRoutes);
-App.use('/api/inscripciones', authMiddleware.isAuth, inscripcionesRoutes);
+App.use('/api/inscripcion', inscripcionRoutes);
 
 module.exports = App;
