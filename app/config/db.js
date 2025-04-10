@@ -30,17 +30,18 @@ db.Sequelize = Sequelize;
 db.SequelizeInstance = sequelizeInstance;
 
 // Importar modelos
-db.cursos = require('../models/cursoModel')(sequelizeInstance, Sequelize);
-db.estudiantes = require('../models/estudianteModel')(sequelizeInstance, Sequelize);
-db.inscripciones = require('../models/inscripcionesModel')(sequelizeInstance, Sequelize);
-db.usuarios = require('../models/usuariosModel')(sequelizeInstance, Sequelize);
+db.curso = require('../models/cursoModel')(sequelizeInstance, Sequelize);
+db.estudiante = require('../models/estudianteModel')(sequelizeInstance, Sequelize);
+db.inscripcion = require('../models/inscripcionModel')(sequelizeInstance, Sequelize);
+
+// Crear variables locales para relaciones
+const Curso = db.curso;
+const Estudiante = db.estudiante;
+const Inscripcion = db.inscripcion;
 
 // Relaciones
-db.estudiantes.hasOne(db.usuarios, { foreignKey: 'idEstudiante', as: 'usuario' });
-db.usuarios.belongsTo(db.estudiantes, { foreignKey: 'idEstudiante', as: 'estudiante' });
-
-db.inscripciones.belongsTo(db.cursos, { foreignKey: 'idCurso', as: 'curso' });
-db.inscripciones.belongsTo(db.estudiantes, { foreignKey: 'idEstudiante', as: 'estudiante' });
+Estudiante.belongsToMany(Curso, { through: Inscripcion, foreignKey: 'idEstudiante' });
+Curso.belongsToMany(Estudiante, { through: Inscripcion, foreignKey: 'idCurso' });
 
 // Sincronizar modelos
 db.SequelizeInstance.sync()

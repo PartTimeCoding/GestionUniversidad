@@ -1,8 +1,6 @@
 'use strict'
 
-const { DataTypes } = require('sequelize');
-
-module.exports = (sequelize) => { 
+module.exports = (sequelize, DataTypes) => { 
     const Estudiante = sequelize.define('Estudiante',{
         idEstudiante: {
             type: DataTypes.INTEGER,

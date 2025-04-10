@@ -1,28 +1,19 @@
-// controllers/cursoControls.js
 const db = require('../config/db');
-const Curso = db.cursos;
+const Curso = db.curso;
 
-async function crearCurso(req, res) {
-  try {
-    const curso = await Curso.create(req.body);
-    res.status(201).json(curso);
-  } catch (error) {
-    console.error("Error al crear curso:", error);
-    res.status(500).json({ error: error.message });
-  }
+async function getCursos(req, res) {
+  await Curso.findAll()
+    .then(data => {
+      if (!data) { res.status(404).send({ message: 'No se encontraron cursos' }) }
+      else {
+          res.status(200).send(data);
+      }
+  })
+    .catch(err => {
+      res.status(500).send({
+          message: err.message || "Sucedio un error al obtener los cursos de la universidad"
+      })
+  })
 }
 
-async function obtenerCursos(req, res) {
-  try {
-    const cursos = await Curso.findAll();
-    res.status(200).json(cursos);
-  } catch (error) {
-    console.error("Error al obtener cursos:", error);
-    res.status(500).json({ error: error.message });
-  }
-}
-
-module.exports = {
-  crearCurso,
-  obtenerCursos
-};
+module.exports = { getCursos }

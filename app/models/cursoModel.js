@@ -1,9 +1,5 @@
 'use strict'
 
-const { DataTypes } = require('sequelize');
-
-// models/cursoModel.js
-
 module.exports = (sequelize, DataTypes) => {
     const Curso = sequelize.define('curso', {
       idCurso: {

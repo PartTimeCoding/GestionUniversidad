@@ -1,9 +1,8 @@
-// routes/inscripcionRoutes.js
 const express = require('express');
 const router = express.Router();
 const inscripcionControls = require('../controllers/inscripcionControls');
 
-// Ruta para obtener cursos inscritos por estudiante
-router.get('/estudiante/:idEstudiante', inscripcionControls.obtenerCursosPorEstudiante);
+router.get('/cursos-estudiante/:id', inscripcionControls.getCursosDeEstudiante);
+router.post('/inscribir', inscripcionControls.inscribirEstudiante);
 
 module.exports = router;

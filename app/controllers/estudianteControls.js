@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const Estudiante = db.estudiantes;
+const Estudiante = db.estudiante;
 
 async function obtenerEstudiantes(req, res) {
     try {

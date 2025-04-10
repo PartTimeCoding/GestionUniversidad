@@ -1,8 +1,6 @@
 'use strict'
 
-const { DataTypes } = require('sequelize');
-
-module.exports = (sequelize) => { 
+module.exports = (sequelize, DataTypes) => { 
     const Inscripcion = sequelize.define('Inscripcion', {
         idInscripcion: {
             type: DataTypes.INTEGER,
@@ -13,18 +11,10 @@ module.exports = (sequelize) => {
         idEstudiante: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: 'estudiantes',
-                key: 'idEstudiante'
-            }
         },
         idCurso: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: 'cursos',
-                key: 'idCurso'
-            }
         },
         FechaInscripcion: {
             type: DataTypes.DATE,
@@ -35,17 +25,9 @@ module.exports = (sequelize) => {
             allowNull: false
         }
     }, {
-        tableName: 'inscripciones',
+        tableName: 'inscripcion',
         timestamps: false,
-        defaultScope: {
-            attributes: { exclude: ['createdAt', 'updatedAt'] }
-        },
     });
-
-    Inscripcion.associate = (models) => {
-        Inscripcion.belongsTo(models.Estudiante, { foreignKey: 'idEstudiante', as: 'estudiante' });
-        Inscripcion.belongsTo(models.Curso, { foreignKey: 'idCurso', as: 'curso' });
-    };
 
     return Inscripcion;
 };
