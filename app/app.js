@@ -21,7 +21,7 @@ db.SequelizeInstance.sync()
     .catch((err) => console.error("Error al sincronizar modelos:", err));
 
 App.use('/api/auth', authRoutes);
-App.use('/api/cursos', authMiddleware.isAuth, cursoRoutes);
+App.use('/api/cursos', cursoRoutes);
 App.use('/api/estudiante', estudianteRoutes);
 App.use('/api/usuarios', usuarioRoutes);
 App.use('/api/inscripcion', inscripcionRoutes);

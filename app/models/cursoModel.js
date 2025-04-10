@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     }, {
-      tableName: 'curso', // Asegura que Sequelize use el nombre correcto en BD
-      timestamps: false   // Desactiva createdAt y updatedAt si no los usas
+      tableName: 'curso',
+      timestamps: false
     });
   
     return Curso;
